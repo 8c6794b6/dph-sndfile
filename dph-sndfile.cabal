@@ -1,0 +1,69 @@
+Name:           dph-sndfile
+Version:        0.6.0.0
+Synopsis:       Reading and writing sound files with dph arrays
+License:        BSD3
+License-file:   LICENSE
+Author:         <8c6794b6@gmail.com>
+Maintainer:     <8c6794b6@gmail.com>
+Category:       Data Structures
+Build-type:     Simple
+Cabal-version:  >=1.8
+Description:
+  Add supporting of reading and writing audio data with dph arrays in
+  various format.
+  .
+  The code is using libsndfile via haskell bindings.
+
+Extra-source-files:
+  example/rw.hs
+  README
+
+flag dev
+  description:
+    Add developer options
+  default:
+    False
+
+Library
+  ghc-options:
+    -Wall -fno-warn-unused-do-bind -fno-warn-orphans
+    -Odph -fllvm -optl-O3 -fno-spec-constr
+
+  exposed-modules:
+    Data.Array.Parallel.Sndfile
+
+  build-depends:
+    base            >= 4.0 && < 5.0,
+    dph-lifted-vseg >= 0.6 && < 0.7,
+    hsndfile        >= 0.5.2 && < 0.6,
+    hsndfile-vector >= 0.5.2 && < 0.6,
+    vector          >= 0.9 && < 1.0
+
+  if flag(dev)
+    other-modules:
+      Test.ReadWrite
+      Test.Vectorised
+
+Executable rw
+  main-is: example/rw.hs
+
+  if flag(dev)
+    buildable: True
+  else
+    buildable: False
+
+  ghc-options:
+    -Wall -rtsopts -threaded
+    -fno-warn-unused-do-bind -fno-warn-orphans
+    -Odph -fllvm -optl-O3 -fno-spec-constr
+
+  build-depends:
+    base            >= 4.0 && < 5.0,
+    dph-lifted-vseg >= 0.6 && < 0.7,
+    hsndfile        >= 0.5.2 && < 0.6,
+    hsndfile-vector >= 0.5.2 && < 0.6,
+    vector          >= 0.9 && < 1.0
+
+source-repository head
+  type: git
+  location: https://github.com/8c6794b6/dph-sndfile.git

@@ -1,0 +1,4 @@
+dph-hsndfile
+============
+
+A thin wrapper for handling audio file with DPH parallel arrays.
